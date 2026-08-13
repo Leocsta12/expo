@@ -6,9 +6,9 @@ import type { State } from './fork/getPathFromState';
 import { getReactNavigationConfig } from './getReactNavigationConfig';
 import { applyRedirects } from './getRoutesRedirects';
 import type { StoreRedirects } from './global-state/router-store';
-import { getInitialURL, getPathFromState, subscribe } from './link/linking';
+import { store } from './global-state/store';
+import { getInitialURL, getPathFromState, getStateFromPath, subscribe } from './link/linking';
 import type { LinkingOptions } from './react-navigation/native';
-import { getActionFromState } from './react-navigation/native';
 import type { NativeIntent, RequireContext } from './types';
 
 export function getNavigationConfig(
@@ -47,6 +47,7 @@ export function getNavigationConfig(
 
 export type ExpoLinkingOptions<T extends object = Record<string, unknown>> = LinkingOptions<T> & {
   getPathFromState: typeof getPathFromState;
+  getStateFromPath: typeof getStateFromPath;
 };
 
 export type LinkingConfigOptions = {
@@ -127,6 +128,9 @@ export function getLinkingConfig(
       return initialUrl;
     },
     subscribe: subscribe(nativeLinking, redirects),
+    getStateFromPath: ((path: string, options?: Parameters<typeof getStateFromPath>[1]) => {
+      return getStateFromPath(path, options, store.getRouteInfo().segments);
+    }) as typeof getStateFromPath,
     getPathFromState(state: State, options: Parameters<typeof getPathFromState>[1]) {
       return (
         getPathFromState(state, {
@@ -136,9 +140,6 @@ export function getLinkingConfig(
         }) ?? '/'
       );
     },
-    // Add all functions to ensure the types never need to fallback.
-    // This is a convenience for usage in the package.
-    getActionFromState,
   };
 }
 
