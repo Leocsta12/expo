@@ -27,7 +27,6 @@
 - [iOS] Fixed viewport size measurement reading the main screen instead of the scene the view is in. ([#48170](https://github.com/expo/expo/pull/48170) by [@alanjhughes](https://github.com/alanjhughes))
 - [iOS] Fix a hosted `Pressable` dropping its press when the finger moves, by measuring hosted React Native views where SwiftUI placed them. ([#48969](https://github.com/expo/expo/pull/48969) by [@nishan](https://github.com/intergalacticspacehighway))
 - [iOS] Fix hosted React Native views receiving no touches inside a `BottomSheet` or `Popover`. ([#48969](https://github.com/expo/expo/pull/48969) by [@nishan](https://github.com/intergalacticspacehighway))
-- [iOS] Fix `RNHostView` with `matchContents` stretching to its parent on the cross axis, which left its size with no fixed point and could spin at 100% CPU. ([#48969](https://github.com/expo/expo/pull/48969) by [@nishan](https://github.com/intergalacticspacehighway))
 
 ### 💡 Others
 
